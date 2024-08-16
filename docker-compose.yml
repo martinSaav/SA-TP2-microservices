@@ -1,0 +1,49 @@
+
+services:
+  ms-healthplan:
+    build:
+      context: ./healthPlan
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network
+
+  ms-clinic:
+    build:
+      context: ./clinic
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+
+  ms-metrics:
+    build:
+      context: ./metrics
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    networks:
+      - my-network
+
+  ms-webclient:
+    build:
+      context: ./webclient
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
+
+  ms-frontend:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    networks:
+      - my-network
+
+networks:
+  my-network:

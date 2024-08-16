@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head">
+    <title>Clinicas</title></head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Lista de clinicas</h2>
+    <button class="btn btn-primary mb-2" onclick="location.href='/'">Volver atras</button>
+    <button class="btn btn-primary mb-2" onclick="location.href='/clinics/create'">Crear Clinica</button>
+    <div class="form-inline my-2 my-lg-0">
+        <div class="input-group mb-3">
+            <input class="form-control mr-sm-2"
+                   type="search"
+                   placeholder="Buscar por nombre de la clinica"
+                   aria-label="Search"
+                   name="search-input"
+                   id="search-input"
+                   th:value="${filter}"
+            >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:onclick="'javascript:search()'">
+                Buscar
+            </button>
+        </div>
+    </div>
+    <div class="alert alert-secondary" role="alert">
+        <div class="d-flex justify-content-start">
+            <p class="m-1">Total de clinicas:<span class="m-1" th:text="${totalElements}"></span></p>
+            <p class="m-1" th:if="${filter != ''}">con el filtro:<span class="m-1" th:text="${filter}"></span></p>
+        </div>
+    </div>
+    <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre de la clinica</th>
+            <th scope="col">ID de la zona</th>
+            <th scope="col">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="clinic : ${clinics}">
+            <td th:onclick="'javascript:rowClicked(\'' + ${clinic.id} + '\');'"
+                style="cursor: pointer" th:text="${clinic.id}"></td>
+            <td th:text="${clinic.nameClinic}"></td>
+            <td th:text="${clinic.zoneId}"></td>
+            <td>
+                <button class="btn btn-primary mr-2" th:onclick="'javascript:rowUpdate(\'' + ${clinic.id} + '\');'">
+                    Editar
+                </button>
+                <button class="btn btn-danger" th:onclick="'javascript:rowDelete(\'' + ${clinic.id} + '\');'">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${totalPages > 1}">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:class="${first} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{'/clinics?filter=' + ${filter} + '&page=' + ${page - 1}} "
+                       th:if="${!first}">Anterior</a>
+                    <span class="page-link" th:if="${first}">Anterior</span>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a class="page-link" th:href="@{'/clinics?filter=' + ${filter} + '&page=' + ${i - 1}}"
+                       th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:class="${last} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{'/clinics?filter=' + ${filter} + '&page=' + ${page + 1}}"
+                       th:if="${!last}">Siguiente</a>
+                    <span class="page-link" th:if="${last}">Siguiente</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<footer th:replace="base :: footer"></footer>
+<script th:inline="javascript">
+    function rowClicked(id) {
+        location.href = "/clinics/" + id;
+    }
+
+    function rowUpdate(id) {
+        location.href = "/clinics/update/" + id;
+    }
+
+    function rowDelete(id) {
+        const filter = document.getElementById("search-input").value;
+        fetch("/clinics/" + id, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.ok) {
+                location.href = "/clinics?filter=" + filter + "&page=0";
+            }
+        });
+    }
+
+    function search() {
+        const filter = document.getElementById("search-input").value;
+        fetch("/clinics?filter=" + filter + "&page=0")
+            .then(response => {
+                    if (response.ok) {
+                        location.href = "/clinics?filter=" + filter + "&page=0";
+                    } else {
+                        alert("No se encontraron resultados");
+                    }
+                }
+            );
+    }
+
+</script>
+</body>
+</html>

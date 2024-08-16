@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head">
+    <title>Crear Clinica</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Crear Clinica</h2>
+    <form th:action="@{/clinics}" th:object="${clinic}" method="POST">
+        <div class="form-group">
+            <label for="nameClinic">Nombre de la clinica</label>
+            <input type="text" class="form-control" id="nameClinic" th:field="*{nameClinic}" required>
+            <div class="invalid-feedback">Por favor, ingrese el nombre de la clinica</div>
+
+            <label for="zoneId">ID de la zona</label>
+            <input type="text" class="form-control" id="zoneId" th:field="*{zoneId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID de la zona</div>
+
+            <label for="healthPlanId">ID del plan salud</label>
+            <input type="text" class="form-control" id="healthPlanId" th:field="*{healthPlanId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID del plan de salud</div>
+
+            <button type="submit" class="btn btn-primary mt-2">Crear</button>
+        </div>
+    </form>
+    <button onclick="location.href='/clinics'" class="btn btn-primary mt-2">Volver a la Lista</button>
+
+</div>
+<footer th:replace="base :: footer"></footer>
+</body>
+</html>

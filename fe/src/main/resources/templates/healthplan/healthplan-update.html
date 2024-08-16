@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head">
+    <title>Editar Plan de Salud</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Plan de Salud</h2>
+    <form id="updateForm">
+        <div class="form-group">
+            <label for="namePlan">Nombre del plan</label>
+            <input type="text" class="form-control" id="namePlan" th:value="${healthplan.namePlan}" required>
+            <div class="invalid-feedback">Por favor, ingrese el nombre del plan</div>
+
+            <label for="documentPath">Ruta del documento</label>
+            <input type="text" class="form-control" id="documentPath" th:value="${healthplan.documentPath}" required>
+            <div class="invalid-feedback">Por favor, ingrese la ruta del documento</div>
+
+            <label for="providerId">ID del proveedor</label>
+            <input type="text" class="form-control" id="providerId" th:value="${healthplan.providerId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID del proveedor</div>
+
+            <label for="employId">ID del empleado</label>
+            <input type="text" class="form-control" id="employId" th:value="${healthplan.employId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID del empleado</div>
+
+            <label for="clinics">Clinicas</label>
+            <input type="text" class="form-control" id="clinics" th:value="${healthplan.clinics}" required>
+            <div class="invalid-feedback">Por favor, ingrese las clinicas</div>
+
+            <label for="comments">Comentarios</label>
+            <input type="text" class="form-control" id="comments" th:value="${healthplan.comments}" required>
+            <div class="invalid-feedback">Por favor, ingrese los comentarios</div>
+
+            <button type="button" class="btn btn-primary mt-2" onclick="updateHealthPlan()">Actualizar</button>
+        </div>
+    </form>
+    <button onclick="location.href='/healthplans'" class="btn btn-primary mt-2">Volver a la Lista</button>
+</div>
+<footer th:replace="base :: footer"></footer>
+
+<script th:inline="javascript">
+    function updateHealthPlan() {
+        var healthplan = {
+            id: [[${healthplan.id}]],
+            namePlan: document.getElementById('namePlan').value,
+            documentPath: document.getElementById('documentPath').value,
+            providerId: document.getElementById('providerId').value,
+            employId: document.getElementById('employId').value,
+            clinics: document.getElementById('clinics').value,
+            comments: document.getElementById('comments').value
+        };
+
+        fetch('/healthplans/' + healthplan.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(healthplan)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al actualizar el plan de salud');
+                }
+                alert('Plan de salud actualizado correctamente');
+                window.location.href = '/healthplans/' + healthplan.id;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head">
+    <title>Detalles del Plan de Salud</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Detalles del Plan de Salud</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${healthplan.namePlan}"></h5>
+            <dl class="row">
+                <dt class="col-sm-3">ID:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.id}"></dd>
+
+                <dt class="col-sm-3">Ruta del documento:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.documentPath}"></dd>
+
+                <dt class="col-sm-3">ID del proveedor:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.providerId}"></dd>
+
+                <dt class="col-sm-3">ID del empleado:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.employId}"></dd>
+
+                <dt class="col-sm-3">Clinicas:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.clinics}"></dd>
+
+                <dt class="col-sm-3">Comentarios:</dt>
+                <dd class="col-sm-9" th:text="${healthplan.comments}"></dd>
+            </dl>
+            <button onclick="location.href='/healthplans'" class="btn btn-primary">Volver a la Lista</button>
+        </div>
+    </div>
+</div>
+<footer th:replace="base :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: head">
+    <title>Crear Plan de Salud</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Crear Plan de Salud</h2>
+    <form th:action="@{/healthplans}" th:object="${healthplan}" method="POST">
+        <div class="form-group">
+            <label for="namePlan">Nombre del plan</label>
+            <input type="text" class="form-control" id="namePlan" th:field="*{namePlan}" required>
+            <div class="invalid-feedback">Por favor, ingrese el nombre del plan</div>
+
+            <label for="documentPath">Ruta del documento</label>
+            <input type="text" class="form-control" id="documentPath" th:field="*{documentPath}" required>
+            <div class="invalid-feedback">Por favor, ingrese la ruta del documento</div>
+
+            <label for="providerId">ID del proveedor</label>
+            <input type="text" class="form-control" id="providerId" th:field="*{providerId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID del proveedor</div>
+
+            <label for="employId">ID del empleado</label>
+            <input type="text" class="form-control" id="employId" th:field="*{employId}" required>
+            <div class="invalid-feedback">Por favor, ingrese el ID del empleado</div>
+
+            <label for="clinics">Clinicas</label>
+            <input type="text" class="form-control" id="clinics" th:field="*{clinics}" required>
+            <div class="invalid-feedback">Por favor, ingrese las clinicas</div>
+
+            <label for="comments">Comentarios</label>
+            <input type="text" class="form-control" id="comments" th:field="*{comments}" required>
+            <div class="invalid-feedback">Por favor, ingrese los comentarios</div>
+
+            <button type="submit" class="btn btn-primary mt-2">Crear</button>
+        </div>
+    </form>
+    <button onclick="location.href='/healthplans'" class="btn btn-primary mt-2">Volver a la Lista</button>
+
+</div>
+<footer th:replace="base :: footer"></footer>
+</body>
+</html>
