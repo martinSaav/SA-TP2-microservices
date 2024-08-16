@@ -57,21 +57,21 @@ public class ClinicService implements IClinicService {
     }
 
     @Override
-    public Mono<Clinic> save(Clinic healthPlan) {
+    public Mono<Clinic> save(Clinic clinic) {
         return webClient.post()
                 .uri("/clinics")
-                .body(Mono.just(healthPlan), Clinic.class)
+                .body(Mono.just(clinic), Clinic.class)
                 .retrieve()
                 .bodyToMono(Clinic.class)
                 .onErrorMap(WebClientResponseException.class, procesarErrorRespuesta());
     }
 
     @Override
-    public Mono<Clinic> update(Integer id, Clinic healthPlan) {
+    public Mono<Clinic> update(Integer id, Clinic clinic) {
         return webClient.put()
                 .uri("/clinics/" + id)
                 .contentType(APPLICATION_JSON)
-                .body(Mono.just(healthPlan), Clinic.class)
+                .body(Mono.just(clinic), Clinic.class)
                 .retrieve()
                 .bodyToMono(Clinic.class)
                 .onErrorMap(WebClientResponseException.class, procesarErrorRespuesta());

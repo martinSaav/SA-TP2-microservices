@@ -7,22 +7,21 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Editar Clinica</h2>
-
     <form id="updateForm">
         <div class="form-group">
-            <label for="namePlan">Nombre del plan</label>
-            <input type="text" class="form-control" id="namePlan" th:value="${clinic.namePlan}" required>
+            <label for="nameClinic">Nombre del plan</label>
+            <input type="text" class="form-control" id="nameClinic" th:value="${clinic.nameClinic}" required>
             <div class="invalid-feedback">Por favor, ingrese el nombre de la clinica</div>
 
-            <label for="documentPath">Id de la zona</label>
-            <input type="text" class="form-control" id="documentPath" th:value="${clinic.documentPath}" required>
+            <label for="zoneId">Id de la zona</label>
+            <input type="text" class="form-control" id="zoneId" th:value="${clinic.zoneId}" required>
             <div class="invalid-feedback">Por favor, ingrese el ID de la zona</div>
 
-            <label for="providerId">ID del plan de salud</label>
-            <input type="text" class="form-control" id="providerId" th:value="${clinic.healthPlanId}" required>
+            <label for="healthPlanId">ID del plan de salud</label>
+            <input type="text" class="form-control" id="healthPlanId" th:value="${clinic.healthPlanId}" required>
             <div class="invalid-feedback">Por favor, ingrese el ID del plan de salud</div>
 
-            <button type="submit" class="btn btn-primary mt-2" onclick="updateClinic()">Actualizar</button>
+            <button type="button" class="btn btn-primary mt-2" onclick="updateClinic()">Actualizar</button>
         </div>
     </form>
     <button onclick="location.href='/clinics'" class="btn btn-primary mt-2">Volver a la Lista</button>
@@ -46,9 +45,9 @@
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al actualizar el plan de salud');
+                    throw new Error('Error al actualizar la clinica');
                 }
-                alert('Plan de salud actualizado correctamente');
+                alert('Clinica actualizada correctamente');
                 window.location.href = '/clinics/' + clinic.id;
             })
             .catch(error => {
